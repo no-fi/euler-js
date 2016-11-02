@@ -1,18 +1,24 @@
 function coinSums(total) {
   var count = 0;
-  var coins = [2, 5, 10, 20, 50, 100, 200];
-  (function helper(n) {
+  (function helper(n, coins) {
     if (coins.length === 0) {
       count += 1;
       return;
     }
-    var coin = coins.pop();
-    helper(n);
-    for (var i = coin; i <= n; i += coin) {
-    	helper(n - i);
+    var nextCoins = coins.slice();
+    var coin = nextCoins.pop();
+    for (var i = 0; i <= n; i += coin) {
+    	helper(n - i, nextCoins);
     }
-  })(total);
+  })(total, [2, 5, 10, 20, 50, 100, 200]);
   return count;
 }
 
-module.exports = coinSums;
+function solve() {
+  return coinSums(200);
+}
+
+module.exports = {
+  coinSums: coinSums,
+  solve: solve,
+};
